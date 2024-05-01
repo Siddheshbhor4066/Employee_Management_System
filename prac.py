@@ -1,8 +1,20 @@
 from tkinter import *
 from Ceodashboard import Ceodashboard
-from Hrdashboard import hrdashboard
+from Hrdashboard import Hrdashboard
 
+class Ceodashboard:
+    def __init__(self, master):
+        self.master = master
+        self.master.geometry("800x600")
+        self.master.title("CEO Dashboard")
+        # Add CEO dashboard widgets and functionality here
 
+class Hrdashboard:
+    def __init__(self, master):
+        self.master = master
+        self.master.geometry("800x600")
+        self.master.title("HR Dashboard")
+        # Add HR dashboard widgets and functionality here
 
 class LoginPage:
     def __init__(self, master):
@@ -34,21 +46,24 @@ class LoginPage:
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=172)
         self.password.insert(0, "Password")
 
-        self.Login = Button(self.frame, text="Login", fg="Blue", font=("Microsoft YaHei UI Light", "11"), command=lambda:self.login.tkraise())
+        self.Login = Button(self.frame, text="Login", fg="Blue", font=("Microsoft YaHei UI Light", "11"), command=self.login)
         self.Login.place(x=100, y=200)
 
     def login(self):
         username = self.user.get()
-        password_value = self.password.get()  # Rename the variable to password_value
+        password_value = self.password.get()
 
-        if username == "ceo" and password_value == "ceo123":  # Use password_value instead of password
+        if username == "ceo" and password_value == "ceo123":
             self.master.destroy()
-            Ceodashboard()
+            root = Tk()
+            ceo_dashboard = Ceodashboard(root)
+            root.mainloop()
 
         elif username == "hr" and password_value == "hr123":
             self.master.destroy()
-            hrdashboard()
-
+            root = Tk()
+            hr_dashboard = Hrdashboard(root)
+            root.mainloop()
 
 def main():
     root = Tk()
