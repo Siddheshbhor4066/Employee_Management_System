@@ -1,8 +1,7 @@
 from tkinter import *
+from tkinter import messagebox
 from Ceodashboard import Ceodashboard
-from Hrdashboard import hrdashboard
-
-
+from Hrdashboard import HRDashboard
 
 class LoginPage:
     def __init__(self, master):
@@ -34,21 +33,26 @@ class LoginPage:
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=172)
         self.password.insert(0, "Password")
 
-        self.Login = Button(self.frame, text="Login", fg="Blue", font=("Microsoft YaHei UI Light", "11"), command=lambda:self.login.tkraise())
+        self.Login = Button(self.frame, text="Login", fg="Blue", font=("Microsoft YaHei UI Light", "11"), command=self.login)
         self.Login.place(x=100, y=200)
 
     def login(self):
         username = self.user.get()
-        password_value = self.password.get()  # Rename the variable to password_value
+        password_value = self.password.get()  
 
-        if username == "ceo" and password_value == "ceo123":  # Use password_value instead of password
+        if username == "ceo" and password_value == "ceo123":  
             self.master.destroy()
-            Ceodashboard()
+            ceo_dashboard = Ceodashboard()
+            ceo_dashboard.run()
 
         elif username == "hr" and password_value == "hr123":
             self.master.destroy()
-            hrdashboard()
+            hr_dashboard = HRDashboard()
+            hr_dashboard.run() 
 
+        else:
+            messagebox.showerror("Error","Please fill correct Username and Password")
+            return
 
 def main():
     root = Tk()
