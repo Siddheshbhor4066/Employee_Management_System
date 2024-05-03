@@ -1,9 +1,8 @@
 from tkinter import *
-from Ceodashboard import Ceodashboard
-from Hrdashboard import hrdashboard
-from Manager import Managerdashboard
-from TLeader import TLeader
-from employee import Employee
+
+from Manager import ManagerDashboard
+from TLeader import TeamLeaderDashboard
+from employee import EmployeeDashboard
 
 class RegisterPage:
     def __init__(self, master):
@@ -86,9 +85,7 @@ class LoginPage:
                             command=self.login)
         self.Login.place(x=100, y=200)
 
-        self.Register = Button(self.frame, text="Register", fg="Blue", font=("Microsoft YaHei UI Light", "11"),
-                               command=self.open_register_page)
-        self.Register.place(x=100, y=250)
+
 
         self.master.tkraise()
 
@@ -96,29 +93,30 @@ class LoginPage:
         username = self.user.get()
         password_value = self.password.get()  # Rename the variable to password_value
 
-        if username == "ceo" and password_value == "ceo123":  # Use password_value instead of password
-            self.master.destroy()
-            Ceodashboard()
+        # if username == "ceo" and password_value == "ceo123":  # Use password_value instead of password
+        #     self.master.destroy()
+        #     Ceodashboard()
+        #
+        # elif username == "hr" and password_value == "hr123":
+        #     self.master.destroy()
+        #     hrdashboard()
 
-        elif username == "hr" and password_value == "hr123":
+        if username == "manager" and password_value == "m123":
             self.master.destroy()
-            hrdashboard()
-
-        elif username == "manager" and password_value == "m123":
-            self.master.destroy()
-            Managerdashboard()
+            m_dashboard=ManagerDashboard()
+            m_dashboard
 
         elif username == "tl" and password_value == "tl123":
             self.master.destroy()
-            TLeader()
+            t_dashboard=TeamLeaderDashboard()
+            t_dashboard
 
         elif username == "em" and password_value == "e123":
             self.master.destroy()
-            Employee()
+            e_dashboard=EmployeeDashboard()
+            e_dashboard
 
-    def open_register_page(self):
-        register_window = Toplevel(self.master)
-        register_page = RegisterPage(register_window)
+
 
 def main():
     root = Tk()
