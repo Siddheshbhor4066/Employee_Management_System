@@ -20,11 +20,31 @@ class LoginPage:
 
         Label(self.frame, text="Sign in", font=("Microsoft YaHei UI Light", "16"), fg="blue").place(x=155, y=10)
 
+######------------------------------------------------------------------------------------------------------------
+        def on_enter(e):
+            self.user.delete(0,'end')
+
+        def on_leave(e):
+            if self.user.get() == "":
+                self.user.insert(0,"Username")
+
         self.user = Entry(self.frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", "11"))
         self.user.place(x=100, y=100)
         self.user.insert(0, "username")
+        self.user.bind("<FocusIn>",on_enter)
+        self.user.bind("<FocusOut>",on_leave)
 
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=122)
+
+#####------------------------------------------------------------------------------------------------------------------
+
+
+        def on_enter(e):
+            self.password.delete(0,'end')
+
+        def on_leave(e):
+            if self.password.get() == "":
+                self.password.insert(0,"Password")
 
         self.password = Entry(self.frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", "11"),
                          show="*")
@@ -32,9 +52,15 @@ class LoginPage:
 
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=172)
         self.password.insert(0, "Password")
+        self.password.bind("<FocusIn>",on_enter)
+        self.password.bind("<FocusOut>",on_leave)
+
+#####----------------------------------------------------------------------------------------------------------------------
 
         self.Login = Button(self.frame, text="Login", fg="Blue", font=("Microsoft YaHei UI Light", "11"), command=self.login)
         self.Login.place(x=100, y=200)
+
+
 
     def login(self):
         username = self.user.get()
