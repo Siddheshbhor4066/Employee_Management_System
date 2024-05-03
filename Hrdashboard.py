@@ -1,4 +1,5 @@
 from tkinter import *
+from logout import logout
 
 
 class HRDashboard:
@@ -34,7 +35,8 @@ class HRDashboard:
         self.AddEmployee = Button(self.root, text=" Add Employee", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"))
         self.AddEmployee.place(x=100, y=300)
 
-        
+        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
+        self.Logout.place(x=845,y=60)
 
     def profile(self):
         self.emp.place_forget()  # Hide employee label
@@ -43,6 +45,8 @@ class HRDashboard:
     def employeedirectory(self):
         self.pro.place_forget()  # Hide profile label
         self.emp.place(x=550, y=100)  # Place employee label
+
+
 
     
 

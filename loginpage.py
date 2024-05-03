@@ -43,16 +43,19 @@ class LoginPage:
         if username == "ceo" and password_value == "ceo123":  
             self.master.destroy()
             ceo_dashboard = Ceodashboard()
-            ceo_dashboard.run()
+            ceo_dashboard
 
         elif username == "hr" and password_value == "hr123":
             self.master.destroy()
             hr_dashboard = HRDashboard()
-            hr_dashboard.run() 
+            hr_dashboard
 
         else:
             messagebox.showerror("Error","Please fill correct Username and Password")
             return
+        
+    
+
 
 def main():
     root = Tk()

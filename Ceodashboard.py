@@ -1,5 +1,5 @@
 from tkinter import *
-
+from logout import logout
 
 class Ceodashboard:
     def __init__(self):
@@ -31,7 +31,8 @@ class Ceodashboard:
         self.EmployeeDirectory = Button(self.root,text="Employee Directory",width=20,bg="#76EE00",fg="blue",bd=0,font=("Microsoft YaHei UI Light", "16"),command=self.employeedirectory)
         self.EmployeeDirectory.place(x=100,y=200)
 
-        
+        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
+        self.Logout.place(x=845,y=60)
 
     def profile(self):
         self.pro.place(x=550,y=100)
