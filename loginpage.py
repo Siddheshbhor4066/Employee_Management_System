@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from Ceodashboard import Ceodashboard
 from Hrdashboard import HRDashboard
+from Manager import ManagerDashboard
 from signup import signup
 
 class LoginPage:
@@ -63,11 +64,11 @@ class LoginPage:
 
 #####----------------------------------------------------------------------------------------------------------------------
 
-        Label(self.frame,text="I Don't have an account !",bg="white",fg="black",font=("Microsoft YaHei UI Light", "8")).place(x=100,y=240)
+        Label(self.frame,text="I Don't have an account !",bg="white",fg="black",font=("Microsoft YaHei UI Light", "8")).place(x=100,y=245)
 
 #####-----------------------------------------------------------------------------------------------------------------------
         self.signup = Button(self.frame,text="Sign up",bg="white",fg="blue",bd=0,font=("Microsoft YaHei UI Light", "8"),command=lambda:signup(self.master))
-        self.signup.place(x=235,y=238)
+        self.signup.place(x=235,y=245)
 
 #####--------------------------------------------------------------------------------------------------------------------------
 
@@ -85,6 +86,11 @@ class LoginPage:
             hr_dashboard = HRDashboard()
             hr_dashboard
 
+        elif username == "manager" and password_value =="manager123":
+            self.master.destroy()
+            manager_db = ManagerDashboard()
+            manager_db
+            
         else:
             messagebox.showerror("Error","Please fill correct Username and Password")
             return

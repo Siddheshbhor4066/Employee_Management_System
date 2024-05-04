@@ -37,11 +37,12 @@ class ManagerDashboard:
         self.Logout.place(x=845,y=60)
 
     def profile(self):
-        self.pro_label.place_forget()
         self.pro_label.place(x=550, y=100)
+        self.emp_label.place_forget()
+
 
     def teams(self):
-        self.emp_label.place_forget()
         self.emp_label.place(x=550, y=100)
+        self.pro_label.place_forget()
 
 
