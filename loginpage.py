@@ -1,55 +1,13 @@
 from tkinter import *
-
+from tkinter import messagebox
+import pandas as pd
+from Ceodashboard import Ceodashboard
+from HRDashboard import HRDashboard
 from Manager import ManagerDashboard
 from TLeader import TeamLeaderDashboard
 from employee import EmployeeDashboard
+from signup import signup
 
-class RegisterPage:
-    def __init__(self, master):
-        self.master = master
-        self.master.geometry("400x300+500+200")
-        self.master.title("Register")
-        self.master.configure(bg="#fff")
-        self.master.resizable(False, False)
-
-        self.name_label = Label(self.master, text="Name:")
-        self.name_label.pack()
-        self.name_entry = Entry(self.master, width=30)
-        self.name_entry.pack()
-
-        self.email_label = Label(self.master, text="Email:")
-        self.email_label.pack()
-        self.email_entry = Entry(self.master, width=30)
-        self.email_entry.pack()
-
-        self.gender_label = Label(self.master, text="Gender:")
-        self.gender_label.pack()
-        self.gender = StringVar()
-        Radiobutton(self.master, text="Male", variable=self.gender, value="Male").pack()
-        Radiobutton(self.master, text="Female", variable=self.gender, value="Female").pack()
-
-        self.position_label = Label(self.master, text="Position:")
-        self.position_label.pack()
-        self.position = StringVar()
-        Radiobutton(self.master, text="Manager", variable=self.position, value="Manager").pack()
-        Radiobutton(self.master, text="Team Leader", variable=self.position, value="Team Leader").pack()
-        Radiobutton(self.master, text="Employee", variable=self.position, value="Employee").pack()
-
-        self.register_button = Button(self.master, text="Register", command=self.register)
-        self.register_button.pack(pady=20)
-
-    def register(self):
-        name = self.name_entry.get()
-        email = self.email_entry.get()
-        gender = self.gender.get()
-        position = self.position.get()
-
-        # Here you can add code to save the registration details to a file or database
-        # For simplicity, let's just print the details for now
-        print("Name:", name)
-        print("Email:", email)
-        print("Gender:", gender)
-        print("Position:", position)
 
 class LoginPage:
     def __init__(self, master):
@@ -63,65 +21,107 @@ class LoginPage:
         self.img = PhotoImage(file="login.png")
         Label(self.master, image=self.img, bg="white").place(x=50, y=50)
 
-        self.frame = Frame(self.master, width=380, height=300, bg="white")
+        self.frame = Frame(self.master, width=400, height=380, bg="white")
         self.frame.place(x=500, y=70)
 
         Label(self.frame, text="Sign in", font=("Microsoft YaHei UI Light", "16"), fg="blue").place(x=155, y=10)
 
-        self.user = Entry(self.frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", "11"))
+        def on_enter(e):
+            self.user.delete(0, 'end')
+
+        def on_leave(e):
+            if self.user.get() == "":
+                self.user.insert(0, "Username")
+
+        self.user = Entry(self.frame, width=25, fg="black", border=0, bg="white",
+                          font=("Microsoft YaHei UI Light", "11"))
         self.user.place(x=100, y=100)
         self.user.insert(0, "username")
+        self.user.bind("<FocusIn>", on_enter)
+        self.user.bind("<FocusOut>", on_leave)
 
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=122)
 
-        self.password = Entry(self.frame, width=25, fg="black", border=0, bg="white", font=("Microsoft YaHei UI Light", "11"),
+        def on_enter(e):
+            self.password.delete(0, 'end')
+
+        def on_leave(e):
+            if self.password.get() == "":
+                self.password.insert(0, "Password")
+
+        self.password = Entry(self.frame, width=25, fg="black", border=0, bg="white",
+                              font=("Microsoft YaHei UI Light", "11"),
                               show="*")
         self.password.place(x=100, y=150)
 
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=172)
         self.password.insert(0, "Password")
+        self.password.bind("<FocusIn>", on_enter)
+        self.password.bind("<FocusOut>", on_leave)
+
+        self.roles = ["CEO", "HR", "Manager", "Team Leader", "Employee"]
+        self.role_var = StringVar(master)
+        self.role_var.set("Position")  # Default value
+        self.role_dropdown = OptionMenu(self.frame, self.role_var, *self.roles)
+        self.role_dropdown.config(width=15, font=("Microsoft YaHei UI Light", "11"))
+        self.role_dropdown.place(x=100, y=200)
 
         self.Login = Button(self.frame, text="Login", fg="Blue", font=("Microsoft YaHei UI Light", "11"),
                             command=self.login)
-        self.Login.place(x=100, y=200)
+        self.Login.place(x=100, y=250)
 
-
-
-        self.master.tkraise()
+        Label(self.frame, text="I Don't have an account !", bg="white", fg="black",
+              font=("Microsoft YaHei UI Light", "8")).place(x=100, y=295)
+        self.signup = Button(self.frame, text="Sign up", bg="white", fg="blue", bd=0,
+                             font=("Microsoft YaHei UI Light", "8"), command=lambda: signup())
+        self.signup.place(x=235, y=295)
 
     def login(self):
         username = self.user.get()
-        password_value = self.password.get()  # Rename the variable to password_value
+        password = self.password.get()
+        role = self.role_var.get()
 
-        # if username == "ceo" and password_value == "ceo123":  # Use password_value instead of password
-        #     self.master.destroy()
-        #     Ceodashboard()
-        #
-        # elif username == "hr" and password_value == "hr123":
-        #     self.master.destroy()
-        #     hrdashboard()
+        if any([not username, not password, role == "Position"]):
+            messagebox.showerror("Error", "Please fill all fields")
+            return
 
-        if username == "manager" and password_value == "m123":
-            self.master.destroy()
-            m_dashboard=ManagerDashboard()
-            m_dashboard
+        try:
+            df = pd.read_excel("users.xlsx")
 
-        elif username == "tl" and password_value == "tl123":
-            self.master.destroy()
-            t_dashboard=TeamLeaderDashboard()
-            t_dashboard
-
-        elif username == "em" and password_value == "e123":
-            self.master.destroy()
-            e_dashboard=EmployeeDashboard()
-            e_dashboard
-
+            if (df["Username"] == username).any() and (df["Password"] == password).any() and (
+                    df["Designation"] == role).any():
+                self.username = username  # Store the username
+                if role == "CEO":
+                    self.master.destroy()
+                    ceo_dash = Ceodashboard(self.username)
+                    ceo_dash
+                elif role == "HR":
+                    self.master.destroy()
+                    hr_dash = HRDashboard(self.username)  # Pass username to HRDashboard
+                    hr_dash
+                elif role == "Manager":
+                    self.master.destroy()
+                    manager_dash = ManagerDashboard(self.username)
+                    manager_dash
+                elif role == "Team Leader":
+                    self.master.destroy()
+                    TL_dash = TeamLeaderDashboard(self.username)
+                    TL_dash
+                elif role == "Employee":
+                    self.master.destroy()
+                    Em_dash = EmployeeDashboard(self.username)
+                    Em_dash
+                else:
+                    messagebox.showerror("Error", "Invalid Username or Password")
+        except FileNotFoundError:
+            messagebox.showerror("Error", "No users registered. Please sign up.")
 
 
 def main():
     root = Tk()
     login_page = LoginPage(root)
     root.mainloop()
+
 
 if __name__ == "__main__":
     main()

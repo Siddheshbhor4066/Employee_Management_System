@@ -3,8 +3,9 @@ from logout import logout
 import pandas as pd
 from tkinter import messagebox
 
-class TeamLeaderDashboard:
-    def __init__(self,username):
+
+class Ceodashboard:
+    def __init__(self, username):
         self.username = username
         self.root = Tk()
         self.root.geometry("927x500+300+200")
@@ -17,30 +18,29 @@ class TeamLeaderDashboard:
 
         self.frame = Frame(self.root, width=900, height=50, bg="#76EE00", border=5)
         self.frame.place(x=15, y=5)
-
-        Label(self.frame, text="Team Leader DASHBOARD", fg="red", bg="#76EE00",
-              font=("Microsoft YaHei UI Light", "20")).place(x=350, y=5)
+        Label(self.frame, text="CEO DASHBOARD", fg="red", bg="#76EE00", font=("Microsoft YaHei UI Light", "20")).place(
+            x=350, y=5)
 
         # Vertical line left
-        Frame(self.root, width=3, height=480, bg="#76EE00").place(x=15, y=5)
+        l1 = Frame(self.root, width=3, height=480, bg="#76EE00").place(x=15, y=5)
 
         # vertical line Right
-        Frame(self.root, width=3, height=480, bg="#76EE00").place(x=914, y=5)
+        l2 = Frame(self.root, width=3, height=480, bg="#76EE00").place(x=914, y=5)
 
         # Horizontal line Bottom
-        Frame(self.root, width=900, height=3, bg="#76EE00").place(x=15, y=482)
+        l3 = Frame(self.root, width=900, height=3, bg="#76EE00").place(x=15, y=482)
 
         self.showprofile = Button(self.root, text="Show Profile", width=20, bg="#76EE00", fg="blue", bd=0,
                                   font=("Microsoft YaHei UI Light", "16"), command=self.profile)
         self.showprofile.place(x=100, y=100)
 
-        self.teams_button = Button(self.root, text="Employee", width=20, bg="#76EE00", fg="blue", bd=0,
-                                   font=("Microsoft YaHei UI Light", "16"), command=self.show_teams)
-        self.teams_button.place(x=100, y=200)
+        self.EmployeeDirectory = Button(self.root, text="Employee Directory", width=20, bg="#76EE00", fg="blue", bd=0,
+                                        font=("Microsoft YaHei UI Light", "16"), command=self.employeedirectory)
+        self.EmployeeDirectory.place(x=100, y=200)
 
-        
-        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"), command=lambda:logout(self.root))
-        self.Logout.place(x=845,y=60)
+        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0,
+                             font=("Microsoft YaHei UI Light", "10", "bold"), command=lambda: logout(self.root))
+        self.Logout.place(x=845, y=60)
 
     def profile(self):
         # Hide employee label
@@ -71,14 +71,10 @@ class TeamLeaderDashboard:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-    def show_teams(self):
-        self.emp.place_forget()
+    def employeedirectory(self):
         self.emp.place(x=550, y=100)
-
-    def run(self):
-        self.root.mainloop()
+        self.pro.place_forget()
 
 
-if __name__ == "__main__":
-    dashboard = TeamLeaderDashboard()
-    dashboard.run()
+
+
