@@ -1,9 +1,13 @@
 from tkinter import *
 from logout import logout
+import pandas as pd
+from tkinter import messagebox
 
 
 class HRDashboard:
-    def __init__(self):
+    def __init__(self, username):
+        self.username = username  # Store the username passed from LoginPage
+
         self.root = Tk()
         self.root.geometry("927x500+300+200")
         self.root.resizable(False, False)
@@ -39,19 +43,42 @@ class HRDashboard:
         self.Logout.place(x=845,y=60)
 
     def profile(self):
-        self.emp.place_forget()  # Hide employee label
-        self.pro.place(x=550, y=100)  # Place profile label
+        # Hide employee label
+        self.emp.place_forget()
+
+        # Place profile label
+        self.pro.place(x=550, y=100)
+
+        # Read data from Excel file
+        try:
+            df = pd.read_excel('users.xlsx')  
+            user_data = df[df['Username'] == self.username]  # Filter data for the logged-in user
+            if not user_data.empty:
+                profile_data = user_data.iloc[0]
+                # Display profile data
+                # For example, create labels to display each piece of profile information
+                Label(self.root, text=f"Name: {profile_data['Name']}").place(x=550, y=150)
+                Label(self.root, text=f"Username: {profile_data['Username']}").place(x=550, y=170)
+                Label(self.root, text=f"Designation: {profile_data['Designation']}").place(x=550, y=190)
+                Label(self.root, text=f"Gender: {profile_data['Gender']}").place(x=550, y=210)
+                Label(self.root, text=f"Phone number: {profile_data['Phone']}").place(x=550, y=230)
+                Label(self.root, text=f"Address: {profile_data['Address']}").place(x=550, y=250)
+                # Add more labels for other profile information as needed
+            else:
+                messagebox.showinfo("Info", "No profile data found for the logged-in user.")
+        except FileNotFoundError:
+            messagebox.showerror("Error", "Profile data file not found.")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
     def employeedirectory(self):
         self.pro.place_forget()  # Hide profile label
         self.emp.place(x=550, y=100)  # Place employee label
 
+    def run(self):
+        self.root.mainloop()
 
 
-    
-
-        
-
-
-
-
+# Usage:
+# hr_dash = HRDashboard("username")
+# hr_dash.run()
