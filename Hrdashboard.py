@@ -1,17 +1,17 @@
 from tkinter import *
+from tkinter import messagebox, ttk
 from logout import logout
 import pandas as pd
-from tkinter import messagebox
-from tkinter import ttk
 
 
-class Ceodashboard:
+class HRDashboard:
     def __init__(self, username):
-        self.username = username
+        self.username = username  # Store the username passed from LoginPage
+
         self.root = Tk()
         self.root.geometry("927x500+300+200")
         self.root.resizable(False, False)
-        self.root.title("ceodashboard")
+        self.root.title("HR Dashboard")
         self.root.configure(bg="white")
 
         self.pro = Label(self.root, text="My Profile", fg="blue", font=("Microsoft YaHei UI Light", "16"))
@@ -19,31 +19,30 @@ class Ceodashboard:
 
         self.frame = Frame(self.root, width=900, height=50, bg="#76EE00", border=5)
         self.frame.place(x=15, y=5)
-        Label(self.frame, text="CEO DASHBOARD", fg="red", bg="#76EE00", font=("Microsoft YaHei UI Light", "20")).place(
-            x=350, y=5)
+        Label(self.frame, text="HR DASHBOARD", fg="red", bg="#76EE00", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=5)
 
         # Vertical line left
         l1 = Frame(self.root, width=3, height=480, bg="#76EE00").place(x=15, y=5)
 
-        # vertical line Right
+        # Vertical line Right
         l2 = Frame(self.root, width=3, height=480, bg="#76EE00").place(x=914, y=5)
 
         # Horizontal line Bottom
         l3 = Frame(self.root, width=900, height=3, bg="#76EE00").place(x=15, y=482)
 
-        self.showprofile = Button(self.root, text="Show Profile", width=20, bg="#76EE00", fg="blue", bd=0,
-                                  font=("Microsoft YaHei UI Light", "16"), command=self.profile)
+        self.showprofile = Button(self.root, text="Show Profile", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.profile)
         self.showprofile.place(x=100, y=100)
 
-        self.EmployeeDirectory = Button(self.root, text="Employee Directory", width=20, bg="#76EE00", fg="blue", bd=0,
-                                        font=("Microsoft YaHei UI Light", "16"), command=self.employeedirectory)
+        self.EmployeeDirectory = Button(self.root, text="Employee Directory", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.employeedirectory)
         self.EmployeeDirectory.place(x=100, y=200)
 
-        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0,
-                             font=("Microsoft YaHei UI Light", "10", "bold"), command=lambda: logout(self.root))
-        self.Logout.place(x=845, y=60)
+        self.AddEmployee = Button(self.root, text=" Add Employee", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"))
+        self.AddEmployee.place(x=100, y=300)
 
-        self.tree = None
+        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
+        self.Logout.place(x=845,y=60)
+
+        self.tree = None  # Placeholder for Treeview widget
 
     def profile(self):
         # Hide employee label
@@ -96,7 +95,7 @@ class Ceodashboard:
             df = pd.read_excel('users.xlsx')
 
             df = df[df["Designation"] != "CEO"]
-
+            df = df[df["Designation"] != "HR"]
             # Display employee directory
             for index, row in df.iterrows():
                 self.tree.insert("", "end", values=(row['Name'], row['Designation']))
@@ -105,7 +104,10 @@ class Ceodashboard:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-        Label(self.root, text="").place(x=400, y=150)
+    def run(self):
+        self.root.mainloop()
 
-
-
+# if __name__ == "__main__":
+#     username = "test_username"  # Replace with the actual username
+#     hr_dashboard = HRDashboard(username)
+#     hr_dashboard.run()

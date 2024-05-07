@@ -18,7 +18,7 @@ class EmployeeDashboard:
         self.frame = Frame(self.root, width=900, height=50, bg="#76EE00", border=5)
         self.frame.place(x=15, y=5)
 
-        Label(self.frame, text="Employee DASHBOARD", fg="red", bg="#76EE00", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=5)
+        Label(self.frame, text="EMPLOYEE DASHBOARD", fg="red", bg="#76EE00", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=5)
 
         # Vertical line left
         Frame(self.root, width=3, height=480, bg="#76EE00").place(x=15, y=5)

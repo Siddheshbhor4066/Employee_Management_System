@@ -2,10 +2,9 @@ from tkinter import *
 from tkinter import messagebox
 import pandas as pd
 from Ceodashboard import Ceodashboard
-from HRDashboard import HRDashboard
+from Hrdashboard import HRDashboard
 from Manager import ManagerDashboard
 from TLeader import TeamLeaderDashboard
-from employee import EmployeeDashboard
 from signup import signup
 
 
@@ -105,14 +104,12 @@ class LoginPage:
                     manager_dash
                 elif role == "Team Leader":
                     self.master.destroy()
-                    TL_dash = TeamLeaderDashboard(self.username)
-                    TL_dash
-                elif role == "Employee":
-                    self.master.destroy()
-                    Em_dash = EmployeeDashboard(self.username)
-                    Em_dash
+                    tl_dash = TeamLeaderDashboard(self.username)
+                    tl_dash
                 else:
                     messagebox.showerror("Error", "Invalid Username or Password")
+            else:
+                messagebox.showerror("Error", "No users registered. Please sign up.")
         except FileNotFoundError:
             messagebox.showerror("Error", "No users registered. Please sign up.")
 
