@@ -13,7 +13,7 @@ class ManagerDashboard:
         self.root.configure(bg="white")
 
         self.pro_label = Label(self.root, text="My Profile", fg="blue", font=("Microsoft YaHei UI Light", "16"))
-        self.emp_label = Label(self.root, text="Employee", fg="blue", font=("Microsoft YaHei UI Light", "16"))
+        self.emp_label = Label(self.root, text="Team Leaders", fg="blue", font=("Microsoft YaHei UI Light", "16"))
 
         self.frame = Frame(self.root, width=900, height=50, bg="#76EE00", border=5)
         self.frame.place(x=15, y=5)

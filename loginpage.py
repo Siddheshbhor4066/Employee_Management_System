@@ -6,6 +6,7 @@ from Hrdashboard import HRDashboard
 from Manager import ManagerDashboard
 from signup import signup
 
+
 class LoginPage:
     def __init__(self, master):
         self.master = master
@@ -17,6 +18,8 @@ class LoginPage:
 
         self.img = PhotoImage(file="login.png")
         Label(self.master, image=self.img, bg="white").place(x=50, y=50)
+
+
 
         self.frame = Frame(self.master, width=400, height=380, bg="white")
         self.frame.place(x=500, y=70)
@@ -98,10 +101,11 @@ class LoginPage:
                     self.master.destroy()
                 else:
                     messagebox.showerror("Error", "Invalid Username or Password")
+            else:
+                messagebox.showerror("Error", "No users registered. Please sign up.")
         except FileNotFoundError:
             messagebox.showerror("Error", "No users registered. Please sign up.")
-
-
+            
 def main():
     root = Tk()
     login_page = LoginPage(root)
@@ -109,3 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

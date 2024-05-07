@@ -2,6 +2,7 @@ from tkinter import *
 from logout import logout
 import pandas as pd
 from tkinter import messagebox
+from tkinter import ttk
 
 class Ceodashboard:
     def __init__(self,username):
@@ -37,12 +38,18 @@ class Ceodashboard:
         self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
         self.Logout.place(x=845,y=60)
 
+        self.tree = None
+
     def profile(self):
         # Hide employee label
         self.emp.place_forget()
 
         # Place profile label
         self.pro.place(x=550, y=100)
+
+        # Remove previous Treeview widget if exists
+        if self.tree:
+            self.tree.destroy()
 
         # Read data from Excel file
         try:
@@ -67,8 +74,33 @@ class Ceodashboard:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
     def employeedirectory(self):
-        self.emp.place(x=550,y=100)
-        self.pro.place_forget()
+        self.pro.place_forget()  # Hide profile label
+        self.emp.place(x=550, y=100)  # Place employee label
+
+        # Remove previous Treeview widget if exists
+        if self.tree:
+            self.tree.destroy()
+
+        # Create and populate the Treeview widget for employee directory
+        self.tree = ttk.Treeview(self.root, columns=("Name", "Designation"), show="headings", selectmode="none")
+        self.tree.heading("Name", text="Name")
+        self.tree.heading("Designation", text="Designation")
+        self.tree.place(x=400, y=150)
+
+        try:
+            df = pd.read_excel('users.xlsx')
+
+            df = df[df["Designation"] != "CEO"]
+        
+            # Display employee directory
+            for index, row in df.iterrows():
+                self.tree.insert("", "end", values=(row['Name'], row['Designation']))
+        except FileNotFoundError:
+            messagebox.showerror("Error", "Employee data file not found.")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
+        Label(self.root,text="").place(x=400,y=150)
 
     
 

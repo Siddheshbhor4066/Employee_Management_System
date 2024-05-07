@@ -1,7 +1,7 @@
 from tkinter import *
+from tkinter import messagebox, ttk
 from logout import logout
 import pandas as pd
-from tkinter import messagebox
 
 
 class HRDashboard:
@@ -42,12 +42,18 @@ class HRDashboard:
         self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
         self.Logout.place(x=845,y=60)
 
+        self.tree = None  # Placeholder for Treeview widget
+
     def profile(self):
         # Hide employee label
         self.emp.place_forget()
 
         # Place profile label
         self.pro.place(x=550, y=100)
+
+        # Remove previous Treeview widget if exists
+        if self.tree:
+            self.tree.destroy()
 
         # Read data from Excel file
         try:
@@ -75,10 +81,33 @@ class HRDashboard:
         self.pro.place_forget()  # Hide profile label
         self.emp.place(x=550, y=100)  # Place employee label
 
+        # Remove previous Treeview widget if exists
+        if self.tree:
+            self.tree.destroy()
+
+        # Create and populate the Treeview widget for employee directory
+        self.tree = ttk.Treeview(self.root, columns=("Name", "Designation"), show="headings", selectmode="none")
+        self.tree.heading("Name", text="Name")
+        self.tree.heading("Designation", text="Designation")
+        self.tree.place(x=400, y=150)
+
+        try:
+            df = pd.read_excel('users.xlsx')
+
+            df = df[df["Designation"] != "CEO"]
+            df = df[df["Designation"] != "HR"]
+            # Display employee directory
+            for index, row in df.iterrows():
+                self.tree.insert("", "end", values=(row['Name'], row['Designation']))
+        except FileNotFoundError:
+            messagebox.showerror("Error", "Employee data file not found.")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
     def run(self):
         self.root.mainloop()
 
-
-# Usage:
-# hr_dash = HRDashboard("username")
-# hr_dash.run()
+# if __name__ == "__main__":
+#     username = "test_username"  # Replace with the actual username
+#     hr_dashboard = HRDashboard(username)
+#     hr_dashboard.run()
