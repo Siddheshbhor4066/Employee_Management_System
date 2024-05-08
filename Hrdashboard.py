@@ -15,29 +15,29 @@ class HRDashboard:
         self.root.title("HR Dashboard")
         self.root.configure(bg="white")
 
-        self.pro = Label(self.root, text="My Profile", fg="blue", font=("Microsoft YaHei UI Light", "16"))
-        self.emp = Label(self.root, text="Employee", fg="blue", font=("Microsoft YaHei UI Light", "16"))
+        self.pro = Label(self.root, text="My Profile",bd =0,bg = "white", fg="blue", font=("Microsoft YaHei UI Light", "16","bold"))
+        self.emp = Label(self.root, text="Employee",bd = 0,bg = "white", fg="blue", font=("Microsoft YaHei UI Light", "16","bold"))
 
-        self.frame = Frame(self.root, width=900, height=50, bg="#76EE00", border=5)
+        self.frame = Frame(self.root, width=900, height=50, bg="#00FFFF", border=5)
         self.frame.place(x=15, y=5)
-        Label(self.frame, text="HR DASHBOARD", fg="red", bg="#76EE00", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=5)
+        Label(self.frame, text="HR DASHBOARD", fg="black", bg="#00FFFF", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=3)
 
         # Vertical line left
-        l1 = Frame(self.root, width=3, height=480, bg="#76EE00").place(x=15, y=5)
+        l1 = Frame(self.root, width=3, height=480, bg="#00FFFF").place(x=15, y=5)
 
         # Vertical line Right
-        l2 = Frame(self.root, width=3, height=480, bg="#76EE00").place(x=914, y=5)
+        l2 = Frame(self.root, width=3, height=480, bg="#00FFFF").place(x=914, y=5)
 
         # Horizontal line Bottom
-        l3 = Frame(self.root, width=900, height=3, bg="#76EE00").place(x=15, y=482)
+        l3 = Frame(self.root, width=900, height=3, bg="#00FFFF").place(x=15, y=482)
 
-        self.showprofile = Button(self.root, text="Show Profile", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.profile)
+        self.showprofile = Button(self.root, text="Show Profile", width=20,height=2, bg="#00FFFF", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.profile)
         self.showprofile.place(x=100, y=100)
 
-        self.EmployeeDirectory = Button(self.root, text="Employee Directory", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.employeedirectory)
+        self.EmployeeDirectory = Button(self.root, text="Employee Directory", width=20,height=2, bg="#00FFFF", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.employeedirectory)
         self.EmployeeDirectory.place(x=100, y=200)
 
-        self.AddEmployee = Button(self.root, text=" Add Employee", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"),command=lambda:addemployee())
+        self.AddEmployee = Button(self.root, text=" Add Employee", width=20,height=2, bg="#00FFFF", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"),command=lambda:addemployee())
         self.AddEmployee.place(x=100, y=300)
 
         self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
@@ -64,12 +64,14 @@ class HRDashboard:
                 profile_data = user_data.iloc[0]
                 # Display profile data
                 # For example, create labels to display each piece of profile information
-                Label(self.root, text=f"Name: {profile_data['Name']}").place(x=550, y=150)
-                Label(self.root, text=f"Username: {profile_data['Username']}").place(x=550, y=170)
-                Label(self.root, text=f"Designation: {profile_data['Designation']}").place(x=550, y=190)
-                Label(self.root, text=f"Gender: {profile_data['Gender']}").place(x=550, y=210)
-                Label(self.root, text=f"Phone number: {profile_data['Phone']}").place(x=550, y=230)
-                Label(self.root, text=f"Address: {profile_data['Address']}").place(x=550, y=250)
+                  
+                Label(self.root, text=f"Name: {profile_data['Name']}",bg="white",bd=0, font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=150)
+                Label(self.root, text=f"Username: {profile_data['Username']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=180)
+                Label(self.root, text=f"Password: {profile_data['Password']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=210)
+                Label(self.root, text=f"Designation: {profile_data['Designation']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=240)
+                Label(self.root, text=f"Gender: {profile_data['Gender']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=270)
+                Label(self.root, text=f"Phone number: {profile_data['Phone']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=300)
+                Label(self.root, text=f"Address: {profile_data['Address']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=330)
                 # Add more labels for other profile information as needed
             else:
                 messagebox.showinfo("Info", "No profile data found for the logged-in user.")
@@ -95,8 +97,7 @@ class HRDashboard:
         try:
             df = pd.read_excel('users.xlsx')
 
-            df = df[df["Designation"] != "CEO"]
-            df = df[df["Designation"] != "HR"]
+            
             # Display employee directory
             for index, row in df.iterrows():
                 self.tree.insert("", "end", values=(row['Name'], row['Designation']))
@@ -108,7 +109,4 @@ class HRDashboard:
     def run(self):
         self.root.mainloop()
 
-# if __name__ == "__main__":
-#     username = "test_username"  # Replace with the actual username
-#     hr_dashboard = HRDashboard(username)
-#     hr_dashboard.run()
+

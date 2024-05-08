@@ -2,23 +2,23 @@ from tkinter import *
 from logout import logout
 import pandas as pd
 from tkinter import messagebox
-from tkinter import ttk
 
-class ManagerDashboard:
+class EmployeeDashboard:
     def __init__(self,username):
         self.username = username
         self.root = Tk()
         self.root.geometry("927x500+300+200")
         self.root.resizable(False, False)
-        self.root.title("Manager Dashboard")
+        self.root.title("Employee Dashboard")
         self.root.configure(bg="white")
 
-        self.pro_label = Label(self.root, text="My Profile", fg="blue",bg="white", font=("Microsoft YaHei UI Light", "16","bold"))
-        self.emp_label = Label(self.root, text="Team Leaders", fg="blue",bg="white", font=("Microsoft YaHei UI Light", "16","bold"))
+        self.pro = Label(self.root, text="My Profile", fg="blue", font=("Microsoft YaHei UI Light", "16","bold"))
+        self.emp = Label(self.root, text="Employee", fg="blue", font=("Microsoft YaHei UI Light", "16","bold"))
 
         self.frame = Frame(self.root, width=900, height=50, bg="#00FFFF", border=5)
         self.frame.place(x=15, y=5)
-        Label(self.frame, text="Manager DASHBOARD", fg="black", bg="#00FFFF", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=3)
+
+        Label(self.frame, text="EMPLOYEE DASHBOARD", fg="black", bg="#00FFFF", font=("Microsoft YaHei UI Light", "20")).place(x=350, y=3)
 
         # Vertical line left
         Frame(self.root, width=3, height=480, bg="#00FFFF").place(x=15, y=5)
@@ -29,29 +29,33 @@ class ManagerDashboard:
         # Horizontal line Bottom
         Frame(self.root, width=900, height=3, bg="#00FFFF").place(x=15, y=482)
 
-        self.show_profile_button = Button(self.root, text="Show Profile", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
-                             font=("Microsoft YaHei UI Light", "16"), command=self.profile)
-        self.show_profile_button.place(x=100, y=100)
+        self.showprofile = Button(self.root, text="Show Profile", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
+                         font=("Microsoft YaHei UI Light", "16"), command=self.profile)
+        self.showprofile.place(x=100, y=100)
 
-        self.teams_button = Button(self.root, text="Team", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
-                                   font=("Microsoft YaHei UI Light", "16"), command=self.teams)
-        self.teams_button.place(x=100, y=200)
-
-        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
+        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"), command=lambda:logout(self.root))
         self.Logout.place(x=845,y=60)
+        self.user_data = self.read_user_data_from_excel()
 
-        self.tree = None
+    def read_user_data_from_excel(self):
+        try:
+            # Read Excel file
+            df = pd.read_excel('users.xlsx')
+
+            # Extract user data
+            user_data = df.to_dict(orient='records')[0]
+
+            return user_data
+        except Exception as e:
+            print("Error reading user data from Excel:", e)
+            return {}
 
     def profile(self):
         # Hide employee label
-        self.emp_label.place_forget()
+        self.emp.place_forget()
 
         # Place profile label
-        self.pro_label.place(x=550, y=100)
-
-        # Remove previous Treeview widget if exists
-        if self.tree:
-            self.tree.destroy()
+        self.pro.place(x=550, y=100)
 
         # Read data from Excel file
         try:
@@ -77,36 +81,7 @@ class ManagerDashboard:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-
-    def teams(self):
-        self.emp_label.place(x=550, y=100)
-        self.pro_label.place_forget()
-
-        # Remove previous Treeview widget if exists
-        if self.tree:
-            self.tree.destroy()
-
-        # Create and populate the Treeview widget for employee directory
-        self.tree = ttk.Treeview(self.root, columns=("Name", "Designation"), show="headings", selectmode="none")
-        self.tree.heading("Name", text="Name")
-        self.tree.heading("Designation", text="Designation")
-        self.tree.place(x=400, y=150)
-
-        try:
-            df = pd.read_excel('users.xlsx')
-
-            df = df[df["Designation"] != "CEO"]
-            df = df[df["Designation"] != "HR"]
-            df = df[df["Designation"] != "Manager"]
-        
-            # Display employee directory
-            for index, row in df.iterrows():
-                self.tree.insert("", "end", values=(row['Name'], row['Designation']))
-        except FileNotFoundError:
-            messagebox.showerror("Error", "Employee data file not found.")
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {str(e)}")
-
-        Label(self.root,text="").place(x=400,y=150)
+    
+    
 
 

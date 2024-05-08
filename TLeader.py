@@ -4,41 +4,47 @@ import pandas as pd
 from tkinter import messagebox
 from tkinter import ttk
 
-class Ceodashboard:
+class TeamLeaderDashboard:
     def __init__(self,username):
         self.username = username
         self.root = Tk()
         self.root.geometry("927x500+300+200")
-        self.root.resizable(False,False)
-        self.root.title("ceodashboard")
+        self.root.resizable(False, False)
+        self.root.title("Team Leader Dashboard")
         self.root.configure(bg="white")
 
         self.pro = Label(self.root, text="My Profile", fg="blue",bg="white", font=("Microsoft YaHei UI Light", "16","bold"))
         self.emp = Label(self.root, text="Employee", fg="blue",bg="white", font=("Microsoft YaHei UI Light", "16","bold"))
 
-        self.frame = Frame(self.root,width=900,height=50,bg="#00FFFF",border=5)
-        self.frame.place(x=15,y=5)
-        Label(self.frame,text="CEO DASHBOARD",fg="black",bg="#00FFFF",font=("Microsoft YaHei UI Light", "20")).place(x=350,y=3)
+        self.frame = Frame(self.root, width=900, height=50, bg="#00FFFF", border=5)
+        self.frame.place(x=15, y=5)
 
-        #Vertical line left
-        l1 = Frame(self.root,width=3,height=480,bg="#00FFFF").place(x=15,y=5)
+        Label(self.frame, text="TEAM LEADER DASHBOARD", fg="black", bg="#00FFFF",
+              font=("Microsoft YaHei UI Light", "20")).place(x=350, y=3)
 
-        #vertical line Right
-        l2 = Frame(self.root,width=3,height=480,bg="#00FFFF").place(x=914,y=5)
+        # Vertical line left
+        Frame(self.root, width=3, height=480, bg="#00FFFF").place(x=15, y=5)
 
-        #Horizontal line Bottom
-        l3 = Frame(self.root,width=900,height=3,bg="#00FFFF").place(x=15,y=482)
+        # vertical line Right
+        Frame(self.root, width=3, height=480, bg="#00FFFF").place(x=914, y=5)
 
-        self.showprofile = Button(self.root,text="Show Profile",width=20,height=2,bg="#00FFFF",fg="blue",bd=0,font=("Microsoft YaHei UI Light", "16"),command=self.profile)
-        self.showprofile.place(x=100,y=100)
+        # Horizontal line Bottom
+        Frame(self.root, width=900, height=3, bg="#00FFFF").place(x=15, y=482)
 
-        self.EmployeeDirectory = Button(self.root,text="Employee Directory",width=20,height=2,bg="#00FFFF",fg="blue",bd=0,font=("Microsoft YaHei UI Light", "16"),command=self.employeedirectory)
-        self.EmployeeDirectory.place(x=100,y=200)
+        self.showprofile = Button(self.root, text="Show Profile", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
+                                  font=("Microsoft YaHei UI Light", "16"), command=self.profile)
+        self.showprofile.place(x=100, y=100)
 
-        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))
+        self.teams_button = Button(self.root, text="Employee", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
+                                   font=("Microsoft YaHei UI Light", "16"), command=self.show_teams)
+        self.teams_button.place(x=100, y=200)
+
+        
+        self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"), command=lambda:logout(self.root))
         self.Logout.place(x=845,y=60)
 
         self.tree = None
+
 
     def profile(self):
         # Hide employee label
@@ -47,7 +53,6 @@ class Ceodashboard:
         # Place profile label
         self.pro.place(x=550, y=100)
 
-        # Remove previous Treeview widget if exists
         if self.tree:
             self.tree.destroy()
 
@@ -75,7 +80,7 @@ class Ceodashboard:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-    def employeedirectory(self):
+    def show_teams(self):
         self.pro.place_forget()  # Hide profile label
         self.emp.place(x=550, y=100)  # Place employee label
 
@@ -92,8 +97,8 @@ class Ceodashboard:
         try:
             df = pd.read_excel('users.xlsx')
 
-            df = df[df["Designation"] != "CEO"]
-        
+            df = df[df["Designation"] == "Employee"]
+
             # Display employee directory
             for index, row in df.iterrows():
                 self.tree.insert("", "end", values=(row['Name'], row['Designation']))
@@ -102,8 +107,4 @@ class Ceodashboard:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-        Label(self.root,text="").place(x=400,y=150)
-
-    
-
-        
+        Label(self.root, text="").place(x=400, y=150)
