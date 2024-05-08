@@ -8,51 +8,51 @@ import re
 def signup():
     root = Tk()
     root.title("Employee Registration")
-    root.geometry("400x480")  # Increased height to accommodate the email field
+    root.geometry("400x400")  # Increased height to accommodate the email field
     root.resizable(False, False)
 
     # Labels
-    Label(root, text="Employee Registration", font=("Arial", 18)).place(x=20, y=10)
-    Label(root, text="Name:").place(x=20, y=50)
-    Label(root, text="Email:").place(x=20, y=80)  # Moved email label after name label
-    Label(root, text="Username:").place(x=20, y=110)  # Adjusted y-coordinate for other labels
-    Label(root, text="Password:").place(x=20, y=140)
-    Label(root, text="Confirm Password:").place(x=20, y=170)
-    Label(root, text="Designation:").place(x=20, y=200)
-    Label(root, text="Gender:").place(x=20, y=230)
-    Label(root, text="Phone Number:").place(x=20, y=260)
-    Label(root, text="Address:").place(x=20, y=290)
+    Label(root, text="Employee Registration", font=("Arial", 18)).place(x=100, y=10)
+    Label(root, text="Name:").place(x=80, y=50)
+    Label(root, text="Email:").place(x=80, y=80)  # Moved email label after name label
+    Label(root, text="Username:").place(x=80, y=110)  # Adjusted y-coordinate for other labels
+    Label(root, text="Password:").place(x=80, y=140)
+    Label(root, text="Confirm Password:").place(x=80, y=170)
+    Label(root, text="Designation:").place(x=80, y=200)
+    Label(root, text="Gender:").place(x=80, y=230)
+    Label(root, text="Phone Number:").place(x=80, y=260)
+    Label(root, text="Address:").place(x=80, y=290)
 
     # Entry fields
     name_entry = Entry(root)
-    name_entry.place(x=150, y=50)
+    name_entry.place(x=210, y=50)
     email_entry = Entry(root)  # New entry field for email
-    email_entry.place(x=150, y=80)  # Adjusted y-coordinate for email entry
+    email_entry.place(x=210, y=80)  # Adjusted y-coordinate for email entry
     username_entry = Entry(root)
-    username_entry.place(x=150, y=110)
+    username_entry.place(x=210, y=110)
     password_entry = Entry(root, show="*")
-    password_entry.place(x=150, y=140)
+    password_entry.place(x=210, y=140)
     confirm_password_entry = Entry(root, show="*")
-    confirm_password_entry.place(x=150, y=170)
+    confirm_password_entry.place(x=210, y=170)
 
     # Dropdown menu for designation
     designations = ["CEO", "HR", "Manager", "Team Leader", "Employee"]
     designation_var = StringVar(root)
     designation_var.set("Designation")  # Default value
     designation_dropdown = OptionMenu(root, designation_var, *designations)
-    designation_dropdown.place(x=150, y=200)
+    designation_dropdown.place(x=210, y=200)
 
     # Gender radio buttons
     gender_var = StringVar(root)
     gender_var.set("Male")
-    Radiobutton(root, text="Male", variable=gender_var, value="Male").place(x=150, y=230)
-    Radiobutton(root, text="Female", variable=gender_var, value="Female").place(x=200, y=230)
+    Radiobutton(root, text="Male", variable=gender_var, value="Male").place(x=210, y=230)
+    Radiobutton(root, text="Female", variable=gender_var, value="Female").place(x=260, y=230)
 
     phone_entry = Entry(root)
-    phone_entry.place(x=150, y=260)
+    phone_entry.place(x=210, y=260)
 
     address_entry = Entry(root)
-    address_entry.place(x=150, y=290)
+    address_entry.place(x=210, y=290)
 
     def save_to_excel():
         # Get values from input fields
