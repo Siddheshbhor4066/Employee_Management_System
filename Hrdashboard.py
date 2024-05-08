@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox, ttk
 from logout import logout
 import pandas as pd
+from AddEmployee import addemployee
 
 
 class HRDashboard:
@@ -36,7 +37,7 @@ class HRDashboard:
         self.EmployeeDirectory = Button(self.root, text="Employee Directory", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"), command=self.employeedirectory)
         self.EmployeeDirectory.place(x=100, y=200)
 
-        self.AddEmployee = Button(self.root, text=" Add Employee", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"))
+        self.AddEmployee = Button(self.root, text=" Add Employee", width=20, bg="#76EE00", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "16"),command=lambda:addemployee())
         self.AddEmployee.place(x=100, y=300)
 
         self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0, font=("Microsoft YaHei UI Light", "10","bold"),command=lambda:logout(self.root))

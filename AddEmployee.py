@@ -5,14 +5,14 @@ import pandas as pd
 import re
 
 
-def signup():
+def addemployee():
     root = Tk()
-    root.title("Employee Registration")
+    root.title("Add New Employee")
     root.geometry("400x480")  # Increased height to accommodate the email field
     root.resizable(False, False)
 
     # Labels
-    Label(root, text="Employee Registration", font=("Arial", 18)).place(x=20, y=10)
+    Label(root, text="Add New Employee", font=("Arial", 18)).place(x=20, y=10)
     Label(root, text="Name:").place(x=20, y=50)
     Label(root, text="Email:").place(x=20, y=80)  # Moved email label after name label
     Label(root, text="Username:").place(x=20, y=110)  # Adjusted y-coordinate for other labels
@@ -136,4 +136,4 @@ def signup():
 
 
 if __name__ == "__main__":
-    signup()
+    addemployee()

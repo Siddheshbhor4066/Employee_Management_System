@@ -16,8 +16,13 @@ class LoginPage:
         self.master.resizable(False, False)
         self.master.iconbitmap("login.ico")
 
-        self.img = PhotoImage(file="login.png")
-        Label(self.master, image=self.img, bg="white").place(x=50, y=50)
+        try:
+            self.img = PhotoImage(file="login.png")
+            self.label = Label(self.master, image=self.img, bg="white")
+            self.label.place(x=50, y=50)
+            print("Image loaded successfully.")
+        except Exception as e:
+            print("Error loading image:", e)
 
 
 
@@ -68,7 +73,7 @@ class LoginPage:
         self.Login.place(x=100, y=250)
 
         Label(self.frame, text="I Don't have an account !", bg="white", fg="black", font=("Microsoft YaHei UI Light", "8")).place(x=100, y=295)
-        self.signup = Button(self.frame, text="Sign up", bg="white", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "8"), command=lambda:signup())
+        self.signup = Button(self.frame, text="Sign up", bg="white", fg="blue", bd=0, font=("Microsoft YaHei UI Light", "8"), command=signup)
         self.signup.place(x=235, y=295)
 
     def login(self):
