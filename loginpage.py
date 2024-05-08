@@ -25,7 +25,7 @@ class LoginPage:
         self.frame = Frame(self.master, width=400, height=380, bg="white")
         self.frame.place(x=500, y=70)
 
-        Label(self.frame, text="Sign in", font=("Microsoft YaHei UI Light", "16"), fg="blue").place(x=155, y=10)
+        Label(self.frame, text="Sign in", font=("Microsoft YaHei UI Light", "24"), fg="blue",bg="white").place(x=155, y=10)
 
         def on_enter(e):
             self.user.delete(0, 'end')
