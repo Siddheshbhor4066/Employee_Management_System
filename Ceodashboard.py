@@ -106,6 +106,3 @@ class Ceodashboard:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
         Label(self.root, text="").place(x=400, y=150)
-
-
-

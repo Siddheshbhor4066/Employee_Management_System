@@ -1,3 +1,4 @@
+
 from tkinter import *
 from tkinter import messagebox
 import pandas as pd
@@ -5,7 +6,9 @@ from Ceodashboard import Ceodashboard
 from Hrdashboard import HRDashboard
 from Manager import ManagerDashboard
 from TLeader import TeamLeaderDashboard
+from Employee import EmployeeDashboard
 from signup import signup
+from PIL import Image ,ImageTk
 
 
 class LoginPage:
@@ -23,7 +26,7 @@ class LoginPage:
         self.frame = Frame(self.master, width=400, height=380, bg="white")
         self.frame.place(x=500, y=70)
 
-        Label(self.frame, text="Sign in", font=("Microsoft YaHei UI Light", "16"), fg="blue").place(x=155, y=10)
+        Label(self.frame, text="Sign in", font=("Microsoft YaHei UI Light", "24"), fg="blue",bg="white").place(x=155, y=10)
 
         def on_enter(e):
             self.user.delete(0, 'end')
@@ -41,10 +44,10 @@ class LoginPage:
 
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=122)
 
-        def on_enter(e):
+        def on_enter_password(e):
             self.password.delete(0, 'end')
 
-        def on_leave(e):
+        def on_leave_password(e):
             if self.password.get() == "":
                 self.password.insert(0, "Password")
 
@@ -55,8 +58,25 @@ class LoginPage:
 
         Frame(self.frame, width=200, height=2, bg="black").place(x=100, y=172)
         self.password.insert(0, "Password")
-        self.password.bind("<FocusIn>", on_enter)
-        self.password.bind("<FocusOut>", on_leave)
+        self.password.bind("<FocusIn>", on_enter_password)
+        self.password.bind("<FocusOut>", on_leave_password)
+
+        # Load the original images
+        show_password_original = Image.open("show_password.png")
+        hide_password_original = Image.open("hide_password.png")
+
+        # Resize the images with LANCZOS resampling
+        show_password_resized = show_password_original.resize((20, 20), Image.Resampling.LANCZOS)
+        hide_password_resized = hide_password_original.resize((20, 20), Image.Resampling.LANCZOS)
+
+
+
+        # Convert the resized images to PhotoImage objects
+        self.show_password_img = ImageTk.PhotoImage(show_password_resized)
+        self.hide_password_img = ImageTk.PhotoImage(hide_password_resized)
+        self.show_hide_password_btn = Button(self.frame, image=self.show_password_img, bd=0, bg="white",
+                                             command=self.toggle_password_visibility)
+        self.show_hide_password_btn.place(x=310, y=150)
 
         self.roles = ["CEO", "HR", "Manager", "Team Leader", "Employee"]
         self.role_var = StringVar(master)
@@ -74,6 +94,14 @@ class LoginPage:
         self.signup = Button(self.frame, text="Sign up", bg="white", fg="blue", bd=0,
                              font=("Microsoft YaHei UI Light", "8"), command=lambda: signup())
         self.signup.place(x=235, y=295)
+
+    def toggle_password_visibility(self):
+        if self.password['show'] == '':
+            self.password.config(show='*')
+            self.show_hide_password_btn.config(image=self.show_password_img)
+        else:
+            self.password.config(show='')
+            self.show_hide_password_btn.config(image=self.hide_password_img)
 
     def login(self):
         username = self.user.get()
@@ -106,6 +134,10 @@ class LoginPage:
                     self.master.destroy()
                     tl_dash = TeamLeaderDashboard(self.username)
                     tl_dash
+                elif role == "Employee":
+                    self.master.destroy()
+                    Employee_dash = EmployeeDashboard(self.username)
+                    Employee_dash
                 else:
                     messagebox.showerror("Error", "Invalid Username or Password")
             else:

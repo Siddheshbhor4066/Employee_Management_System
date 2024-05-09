@@ -2,27 +2,24 @@ from tkinter import *
 from logout import logout
 import pandas as pd
 from tkinter import messagebox
-from tkinter import ttk
 
 
-class TeamLeaderDashboard:
+class EmployeeDashboard:
     def __init__(self, username):
         self.username = username
         self.root = Tk()
         self.root.geometry("927x500+300+200")
         self.root.resizable(False, False)
-        self.root.title("Team Leader Dashboard")
+        self.root.title("Employee Dashboard")
         self.root.configure(bg="white")
 
-        self.pro = Label(self.root, text="My Profile", fg="blue", bg="white",
-                         font=("Microsoft YaHei UI Light", "16", "bold"))
-        self.emp = Label(self.root, text="Employee", fg="blue", bg="white",
-                         font=("Microsoft YaHei UI Light", "16", "bold"))
+        self.pro = Label(self.root, text="My Profile", fg="blue", font=("Microsoft YaHei UI Light", "16", "bold"))
+        self.emp = Label(self.root, text="Employee", fg="blue", font=("Microsoft YaHei UI Light", "16", "bold"))
 
         self.frame = Frame(self.root, width=900, height=50, bg="#00FFFF", border=5)
         self.frame.place(x=15, y=5)
 
-        Label(self.frame, text="TEAM LEADER DASHBOARD", fg="black", bg="#00FFFF",
+        Label(self.frame, text="EMPLOYEE DASHBOARD", fg="black", bg="#00FFFF",
               font=("Microsoft YaHei UI Light", "20")).place(x=350, y=3)
 
         # Vertical line left
@@ -38,15 +35,23 @@ class TeamLeaderDashboard:
                                   font=("Microsoft YaHei UI Light", "16"), command=self.profile)
         self.showprofile.place(x=100, y=100)
 
-        self.teams_button = Button(self.root, text="Employee", width=20, height=2, bg="#00FFFF", fg="blue", bd=0,
-                                   font=("Microsoft YaHei UI Light", "16"), command=self.show_teams)
-        self.teams_button.place(x=100, y=200)
-
         self.Logout = Button(self.root, text="Logout", width=6, bg="black", fg="yellow", bd=0,
                              font=("Microsoft YaHei UI Light", "10", "bold"), command=lambda: logout(self.root))
         self.Logout.place(x=845, y=60)
+        self.user_data = self.read_user_data_from_excel()
 
-        self.tree = None
+    def read_user_data_from_excel(self):
+        try:
+            # Read Excel file
+            df = pd.read_excel('users.xlsx')
+
+            # Extract user data
+            user_data = df.to_dict(orient='records')[0]
+
+            return user_data
+        except Exception as e:
+            print("Error reading user data from Excel:", e)
+            return {}
 
     def profile(self):
         # Hide employee label
@@ -54,9 +59,6 @@ class TeamLeaderDashboard:
 
         # Place profile label
         self.pro.place(x=550, y=100)
-
-        if self.tree:
-            self.tree.destroy()
 
         # Read data from Excel file
         try:
@@ -89,31 +91,4 @@ class TeamLeaderDashboard:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-    def show_teams(self):
-        self.pro.place_forget()  # Hide profile label
-        self.emp.place(x=550, y=100)  # Place employee label
 
-        # Remove previous Treeview widget if exists
-        if self.tree:
-            self.tree.destroy()
-
-        # Create and populate the Treeview widget for employee directory
-        self.tree = ttk.Treeview(self.root, columns=("Name", "Designation"), show="headings", selectmode="none")
-        self.tree.heading("Name", text="Name")
-        self.tree.heading("Designation", text="Designation")
-        self.tree.place(x=400, y=150)
-
-        try:
-            df = pd.read_excel('users.xlsx')
-
-            df = df[df["Designation"] == "Employee"]
-
-            # Display employee directory
-            for index, row in df.iterrows():
-                self.tree.insert("", "end", values=(row['Name'], row['Designation']))
-        except FileNotFoundError:
-            messagebox.showerror("Error", "Employee data file not found.")
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {str(e)}")
-
-        Label(self.root, text="").place(x=400, y=150)
