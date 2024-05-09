@@ -68,8 +68,6 @@ class LoginPage:
         show_password_resized = show_password_original.resize((20, 20), Image.Resampling.LANCZOS)
         hide_password_resized = hide_password_original.resize((20, 20), Image.Resampling.LANCZOS)
 
-
-
         # Convert the resized images to PhotoImage objects
         self.show_password_img = ImageTk.PhotoImage(show_password_resized)
         self.hide_password_img = ImageTk.PhotoImage(hide_password_resized)
