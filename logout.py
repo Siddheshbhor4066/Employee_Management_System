@@ -1,5 +1,4 @@
 from tkinter import *
-
 def logout(root):
     root.destroy()
     # Recreate and show the login page
