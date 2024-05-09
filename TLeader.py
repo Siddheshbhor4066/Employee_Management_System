@@ -14,10 +14,8 @@ class TeamLeaderDashboard:
         self.root.title("Team Leader Dashboard")
         self.root.configure(bg="white")
 
-        self.pro = Label(self.root, text="My Profile", fg="blue", bg="white",
-                         font=("Microsoft YaHei UI Light", "16", "bold"))
-        self.emp = Label(self.root, text="Employee", fg="blue", bg="white",
-                         font=("Microsoft YaHei UI Light", "16", "bold"))
+        self.pro = Label(self.root, text="My Profile", fg="blue",bg="white", font=("Microsoft YaHei UI Light", "16","bold"))
+        self.emp = Label(self.root, text="Employee", fg="blue",bg="white", font=("Microsoft YaHei UI Light", "16","bold"))
 
         self.frame = Frame(self.root, width=900, height=50, bg="#00FFFF", border=5)
         self.frame.place(x=15, y=5)
@@ -34,11 +32,11 @@ class TeamLeaderDashboard:
         # Horizontal line Bottom
         Frame(self.root, width=900, height=3, bg="#00FFFF").place(x=15, y=482)
 
-        self.showprofile = Button(self.root, text="Show Profile", width=20, height=2, bg="#00FFFF", fg="blue", bd=0,
+        self.showprofile = Button(self.root, text="Show Profile", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
                                   font=("Microsoft YaHei UI Light", "16"), command=self.profile)
         self.showprofile.place(x=100, y=100)
 
-        self.teams_button = Button(self.root, text="Employee", width=20, height=2, bg="#00FFFF", fg="blue", bd=0,
+        self.teams_button = Button(self.root, text="Employee", width=20,height=2, bg="#00FFFF", fg="blue", bd=0,
                                    font=("Microsoft YaHei UI Light", "16"), command=self.show_teams)
         self.teams_button.place(x=100, y=200)
 
@@ -60,27 +58,20 @@ class TeamLeaderDashboard:
 
         # Read data from Excel file
         try:
-            df = pd.read_excel('users.xlsx')
+            df = pd.read_excel('users.xlsx')  
             user_data = df[df['Username'] == self.username]  # Filter data for the logged-in user
             if not user_data.empty:
                 profile_data = user_data.iloc[0]
                 # Display profile data
                 # For example, create labels to display each piece of profile information
-
-                Label(self.root, text=f"Name: {profile_data['Name']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=150)
-                Label(self.root, text=f"Username: {profile_data['Username']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=180)
-                Label(self.root, text=f"Password: {profile_data['Password']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=210)
-                Label(self.root, text=f"Designation: {profile_data['Designation']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=240)
-                Label(self.root, text=f"Gender: {profile_data['Gender']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=270)
-                Label(self.root, text=f"Phone number: {profile_data['Phone']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=300)
-                Label(self.root, text=f"Address: {profile_data['Address']}", bg="white",
-                      font=("Microsoft YaHei UI Light", "12", "bold")).place(x=550, y=330)
+                  
+                Label(self.root, text=f"Name: {profile_data['Name']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=150)
+                Label(self.root, text=f"Username: {profile_data['Username']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=180)
+                Label(self.root, text=f"Password: {profile_data['Password']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=210)
+                Label(self.root, text=f"Designation: {profile_data['Designation']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=240)
+                Label(self.root, text=f"Gender: {profile_data['Gender']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=270)
+                Label(self.root, text=f"Phone number: {profile_data['Phone']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=300)
+                Label(self.root, text=f"Address: {profile_data['Address']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=330)
                 # Add more labels for other profile information as needed
             else:
                 messagebox.showinfo("Info", "No profile data found for the logged-in user.")
