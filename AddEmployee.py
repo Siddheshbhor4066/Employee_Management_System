@@ -120,11 +120,7 @@ def addemployee():
                 df.to_excel('users.xlsx', index=False, header=True)
             messagebox.showinfo("Successful", "User Sign Up Successful")
             root.destroy()  # to destroy the signup window
-            # Return to login page
-            from loginpage import LoginPage
-            master = Tk()
-            login_page = LoginPage(master)
-            login_page
+            
         else:
             messagebox.showerror("Error", "Password and Confirm Password do not match.")
             return
