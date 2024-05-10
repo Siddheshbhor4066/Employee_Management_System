@@ -5,66 +5,72 @@ import pandas as pd
 import re
 
 
-def signup():
-    root = Tk()
-    root.title("Employee Registration")
-    root.geometry("400x400")  # Increased height to accommodate the email field
-    root.resizable(False, False)
+class SignupPage:
+    def __init__(self):
+    
+        self.root = Tk()
+        self.root.title("Employee Registration")
+        self.root.geometry("400x400")  # Increased height to accommodate the email field
+        self.root.resizable(False, False)
 
-    # Labels
-    Label(root, text="Employee Registration", font=("Arial", 18)).place(x=100, y=10)
-    Label(root, text="Name:").place(x=80, y=50)
-    Label(root, text="Email:").place(x=80, y=80)  # Moved email label after name label
-    Label(root, text="Username:").place(x=80, y=110)  # Adjusted y-coordinate for other labels
-    Label(root, text="Password:").place(x=80, y=140)
-    Label(root, text="Confirm Password:").place(x=80, y=170)
-    Label(root, text="Designation:").place(x=80, y=200)
-    Label(root, text="Gender:").place(x=80, y=230)
-    Label(root, text="Phone Number:").place(x=80, y=260)
-    Label(root, text="Address:").place(x=80, y=290)
+        # Labels
+        Label(self.root, text="Employee Registration", font=("Arial", 18)).place(x=100, y=10)
+        Label(self.root, text="Name:").place(x=80, y=50)
+        Label(self.root, text="Email:").place(x=80, y=80)  # Moved email label after name label
+        Label(self.root, text="Username:").place(x=80, y=110)  # Adjusted y-coordinate for other labels
+        Label(self.root, text="Password:").place(x=80, y=140)
+        Label(self.root, text="Confirm Password:").place(x=80, y=170)
+        Label(self.root, text="Designation:").place(x=80, y=200)
+        Label(self.root, text="Gender:").place(x=80, y=230)
+        Label(self.root, text="Phone Number:").place(x=80, y=260)
+        Label(self.root, text="Address:").place(x=80, y=290)
 
-    # Entry fields
-    name_entry = Entry(root)
-    name_entry.place(x=210, y=50)
-    email_entry = Entry(root)  # New entry field for email
-    email_entry.place(x=210, y=80)  # Adjusted y-coordinate for email entry
-    username_entry = Entry(root)
-    username_entry.place(x=210, y=110)
-    password_entry = Entry(root, show="*")
-    password_entry.place(x=210, y=140)
-    confirm_password_entry = Entry(root, show="*")
-    confirm_password_entry.place(x=210, y=170)
+        # Entry fields
+        self.name_entry = Entry(self.root)
+        self.name_entry.place(x=210, y=50)
+        self.email_entry = Entry(self.root)  # New entry field for email
+        self.email_entry.place(x=210, y=80)  # Adjusted y-coordinate for email entry
+        self.username_entry = Entry(self.root)
+        self.username_entry.place(x=210, y=110)
+        self.password_entry = Entry(self.root, show="*")
+        self.password_entry.place(x=210, y=140)
+        self.confirm_password_entry = Entry(self.root, show="*")
+        self.confirm_password_entry.place(x=210, y=170)
 
-    # Dropdown menu for designation
-    designations = ["CEO", "HR", "Manager", "Team Leader", "Employee"]
-    designation_var = StringVar(root)
-    designation_var.set("Designation")  # Default value
-    designation_dropdown = OptionMenu(root, designation_var, *designations)
-    designation_dropdown.place(x=210, y=200)
+        # Dropdown menu for designation
+        designations = ["CEO", "HR", "Manager", "Team Leader", "Employee"]
+        self.designation_var = StringVar(self.root)
+        self.designation_var.set("Designation")  # Default value
+        self.designation_dropdown = OptionMenu(self.root, self.designation_var, *designations)
+        self.designation_dropdown.place(x=210, y=200)
 
-    # Gender radio buttons
-    gender_var = StringVar(root)
-    gender_var.set("Male")
-    Radiobutton(root, text="Male", variable=gender_var, value="Male").place(x=210, y=230)
-    Radiobutton(root, text="Female", variable=gender_var, value="Female").place(x=260, y=230)
+        # Gender radio buttons
+        self.gender_var = StringVar(self.root)
+        self.gender_var.set("Male")
+        Radiobutton(self.root, text="Male", variable=self.gender_var, value="Male").place(x=210, y=230)
+        Radiobutton(self.root, text="Female", variable=self.gender_var, value="Female").place(x=260, y=230)
 
-    phone_entry = Entry(root)
-    phone_entry.place(x=210, y=260)
+        self.phone_entry = Entry(self.root)
+        self.phone_entry.place(x=210, y=260)
 
-    address_entry = Entry(root)
-    address_entry.place(x=210, y=290)
+        self.address_entry = Entry(self.root)
+        self.address_entry.place(x=210, y=290)
 
-    def save_to_excel():
+        Button(self.root, text="Register", command=self.save_to_excel).place(x=150, y=330)  # Adjusted y-coordinate
+
+        self.root.mainloop()
+
+    def save_to_excel(self):
         # Get values from input fields
-        employee_name = name_entry.get()
-        employee_email = email_entry.get()  # Get email value
-        employee_username = username_entry.get()
-        employee_password = password_entry.get()
-        employee_confirm_password = confirm_password_entry.get()
-        employee_designation = designation_var.get()  # Get designation value from dropdown
-        employee_gender = gender_var.get()
-        employee_phone = phone_entry.get()
-        employee_address = address_entry.get()
+        employee_name = self.name_entry.get()
+        employee_email = self.email_entry.get()  # Get email value
+        employee_username = self.username_entry.get()
+        employee_password = self.password_entry.get()
+        employee_confirm_password = self.confirm_password_entry.get()
+        employee_designation = self.designation_var.get()  # Get designation value from dropdown
+        employee_gender = self.gender_var.get()
+        employee_phone = self.phone_entry.get()
+        employee_address = self.address_entry.get()
 
         try:
             # Check if the username or email already exists in the Excel file
@@ -119,20 +125,9 @@ def signup():
                 # If file doesn't exist, save new data
                 df.to_excel('users.xlsx', index=False, header=True)
             messagebox.showinfo("Successful", "User Sign Up Successful")
-            root.destroy()  # to destroy the signup window
-            # Return to login page3
-            from loginpage import LoginPage
-            master = Tk()
-            login_page = LoginPage(master)
-            login_page
+            self.root.destroy()  # to destroy the signup window
+            
         else:
             messagebox.showerror("Error", "Password and Confirm Password do not match.")
             return
-
-    Button(root, text="Register", command=save_to_excel).place(x=150, y=330)  # Adjusted y-coordinate
-
-    root.mainloop()
-
-
-if __name__ == "__main__":
-    signup()
+        
