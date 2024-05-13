@@ -1,4 +1,3 @@
-
 from tkinter import *
 from tkinter import messagebox
 import pandas as pd
@@ -6,13 +5,8 @@ from Ceodashboard import Ceodashboard
 from Hrdashboard import HRDashboard
 from Manager import ManagerDashboard
 from TLeader import TeamLeaderDashboard
-<<<<<<< HEAD
-from employee import EmployeeDashboard
-from signup import signup
-=======
 from Employee import EmployeeDashboard
 from signup import SignupPage
->>>>>>> e85b7cfeae18f669ad22ea7ec945f966e1faa3d8
 from PIL import Image ,ImageTk
 
 
