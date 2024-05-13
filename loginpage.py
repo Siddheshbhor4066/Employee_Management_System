@@ -6,8 +6,13 @@ from Ceodashboard import Ceodashboard
 from Hrdashboard import HRDashboard
 from Manager import ManagerDashboard
 from TLeader import TeamLeaderDashboard
+<<<<<<< HEAD
 from employee import EmployeeDashboard
 from signup import signup
+=======
+from Employee import EmployeeDashboard
+from signup import SignupPage
+>>>>>>> e85b7cfeae18f669ad22ea7ec945f966e1faa3d8
 from PIL import Image ,ImageTk
 
 
@@ -19,6 +24,7 @@ class LoginPage:
         self.master.configure(bg="#fff")
         self.master.resizable(False, False)
         self.master.iconbitmap("login.ico")
+
 
         self.img = PhotoImage(file="login.png")
         Label(self.master, image=self.img, bg="white").place(x=50, y=50)
@@ -90,7 +96,7 @@ class LoginPage:
         Label(self.frame, text="I Don't have an account !", bg="white", fg="black",
               font=("Microsoft YaHei UI Light", "8")).place(x=100, y=295)
         self.signup = Button(self.frame, text="Sign up", bg="white", fg="blue", bd=0,
-                             font=("Microsoft YaHei UI Light", "8"), command=lambda: signup())
+                             font=("Microsoft YaHei UI Light", "8"), command=lambda:SignupPage())
         self.signup.place(x=235, y=295)
 
     def toggle_password_visibility(self):
@@ -142,11 +148,12 @@ class LoginPage:
                 messagebox.showerror("Error", "No users registered. Please sign up.")
         except FileNotFoundError:
             messagebox.showerror("Error", "No users registered. Please sign up.")
-
+            
 
 def main():
     root = Tk()
     login_page = LoginPage(root)
+    login_page
     root.mainloop()
 
 

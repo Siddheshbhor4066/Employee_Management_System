@@ -106,7 +106,7 @@ def addemployee():
         elif employee_password == employee_confirm_password:
             data = {'Name': [employee_name], 'Email': [employee_email], 'Username': [employee_username], 'Password': [employee_password],
                     'Designation': [employee_designation], "Gender": [employee_gender], "Phone": [employee_phone],
-                    "Address": [employee_address]}  # Include email in data
+                    "Address": [employee_address]}  
             df = pd.DataFrame(data)
             # Check if file exists
             if os.path.exists('users.xlsx'):
@@ -118,15 +118,15 @@ def addemployee():
             else:
                 # If file doesn't exist, save new data
                 df.to_excel('users.xlsx', index=False, header=True)
-            messagebox.showinfo("Successful", "User Sign Up Successful")
-            root.destroy()  # to destroy the signup window
-
+                messagebox.showinfo("Successful", "User Sign Up Successful")
+                root.destroy()  # to destroy the Add Employee window
+            
         else:
             messagebox.showerror("Error", "Password and Confirm Password do not match.")
             return
 
 
-    Button(root, text="Register", command=save_to_excel).place(x=150, y=330)  # Adjusted y-coordinate
+    Button(root, text="Register", command=save_to_excel).place(x=150, y=330)
 
     root.mainloop()
 

@@ -64,8 +64,7 @@ class EmployeeDashboard:
             if not user_data.empty:
                 profile_data = user_data.iloc[0]
                 # Display profile data
-                # For example, create labels to display each piece of profile information
-                  
+                #create labels to display each piece of profile information
                 Label(self.root, text=f"Name: {profile_data['Name']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=150)
                 Label(self.root, text=f"Username: {profile_data['Username']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=180)
                 Label(self.root, text=f"Designation: {profile_data['Designation']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=210)
