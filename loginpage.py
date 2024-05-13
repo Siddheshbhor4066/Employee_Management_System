@@ -142,7 +142,7 @@ class LoginPage:
                 messagebox.showerror("Error", "No users registered. Please sign up.")
         except FileNotFoundError:
             messagebox.showerror("Error", "No users registered. Please sign up.")
-
+            
 
 def main():
     root = Tk()
