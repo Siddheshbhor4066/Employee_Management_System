@@ -118,8 +118,8 @@ def addemployee():
             else:
                 # If file doesn't exist, save new data
                 df.to_excel('users.xlsx', index=False, header=True)
-            messagebox.showinfo("Successful", "User Sign Up Successful")
-            root.destroy()  # to destroy the Add Employee window
+                messagebox.showinfo("Successful", "User Sign Up Successful")
+                root.destroy()  # to destroy the Add Employee window
             
         else:
             messagebox.showerror("Error", "Password and Confirm Password do not match.")
