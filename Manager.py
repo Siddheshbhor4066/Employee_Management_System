@@ -64,11 +64,10 @@ class ManagerDashboard:
                   
                 Label(self.root, text=f"Name: {profile_data['Name']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=150)
                 Label(self.root, text=f"Username: {profile_data['Username']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=180)
-                Label(self.root, text=f"Password: {profile_data['Password']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=210)
-                Label(self.root, text=f"Designation: {profile_data['Designation']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=240)
-                Label(self.root, text=f"Gender: {profile_data['Gender']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=270)
-                Label(self.root, text=f"Phone number: {profile_data['Phone']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=300)
-                Label(self.root, text=f"Address: {profile_data['Address']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=330)
+                Label(self.root, text=f"Designation: {profile_data['Designation']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=210)
+                Label(self.root, text=f"Gender: {profile_data['Gender']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=240)
+                Label(self.root, text=f"Phone number: {profile_data['Phone']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=270)
+                Label(self.root, text=f"Address: {profile_data['Address']}",bg="white", font=("Microsoft YaHei UI Light", "12","bold")).place(x=550, y=300)
                 # Add more labels for other profile information as needed
             else:
                 messagebox.showinfo("Info", "No profile data found for the logged-in user.")

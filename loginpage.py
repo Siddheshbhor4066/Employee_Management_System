@@ -6,7 +6,7 @@ from Ceodashboard import Ceodashboard
 from Hrdashboard import HRDashboard
 from Manager import ManagerDashboard
 from TLeader import TeamLeaderDashboard
-from Employee import EmployeeDashboard
+from employee import EmployeeDashboard
 from signup import signup
 from PIL import Image ,ImageTk
 
